@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { PhotoModel } from './photo.model';
 
-const { Camera, Filesystem, Storage , } = Plugins;
+import { HttpClient } from '@angular/common/http';
+
+const { Camera, Filesystem, Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 
 })
 export class PhotoService {
-  public photos: Photo[] = [];
+  public photos: PhotoModel[] = [];
   private PHOTO_STORAGE = 'photos';
   private platform: Platform;
 
   public async loadSaved() {
     // Retrieve cached photo array data
-    const photos = await Storage.get({ key: this.PHOTO_STORAGE });
-    this.photos = JSON.parse(photos.value) || [];
+    const photosInStorage = await Storage.get({ key: this.PHOTO_STORAGE });
+    this.photos = JSON.parse(photosInStorage.value) || [];
 
     // If running on the web...
     if (!this.platform.is('hybrid')) {
@@ -162,15 +165,4 @@ export class PhotoService {
     };
     reader.readAsDataURL(blob);
   })
-}
-
-
-
-
-
-
-interface Photo {
-  filepath: string;
-  webviewPath: string;
-  base64?: string;
 }

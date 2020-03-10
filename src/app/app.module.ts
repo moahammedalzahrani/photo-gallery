@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { MetalInspectComponent } from './metal-inspect/metal-inspect.component';
+import { MetalInspectResultComponent } from './metal-inspect/metal-inspect-result/metal-inspect-result.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MetalInspectComponent, ReactiveFormsModule,
+    MetalInspectResultComponent ],
+
   entryComponents: [],
-  imports: [BrowserModule,  IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, HttpClientModule,
+    ReactiveFormsModule
+],
   providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })
